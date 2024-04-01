@@ -3,7 +3,7 @@
 from typing import Tuple
 
 
-def index_range(page: int, size:int)->Tuple[int, int]:
+def index_range(page: int, size: int) -> Tuple[int, int]:
     """ returns the first and last index"""
     # index_range(1,7) = index 0 and index 7
     # index_rnage(3, 15) = index 30 index 45
