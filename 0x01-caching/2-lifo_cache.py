@@ -1,28 +1,24 @@
-#!/usr/bin/env python3
-"""module level documentation"""
+#!/usr/bin/python3
+""" doc doc doc """
 BaseCaching = __import__("base_caching").BaseCaching
 
 
 class LIFOCache(BaseCaching):
+    """doc doc doc"""
+
     def __init__(self):
+        """doc doc doc"""
         super().__init__()
 
     def put(self, key, item):
+        """doc doc doc"""
         if key and item:
-
-            length = len(self.cache_data)
-            if length >= BaseCaching.MAX_ITEMS:
-               # last_item = next(reversed(self.cache_data.keys()))
-                last_item = list(self.cache_data.keys())[-1]
-                self.cache_data.pop(last_item)
-                print("DISCARD: {}".format(last_item))
-
+            if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
+                removed = list(self.cache_data.keys())[-1]
+                self.cache_data.pop(removed)
+                print("DISCARD: {}".format(removed))
             self.cache_data[key] = item
 
-
     def get(self, key):
-        """gets a list from a dict"""
-        if key:
-            return self.cache_data.get(key)
-        else:
-            return None
+        """doc doc doc"""
+        return self.cache_data.get(key)
