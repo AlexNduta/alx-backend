@@ -1,19 +1,16 @@
 #!/usr/bin/env python3
-from base_caching import BaseCaching
 """ -class that inherits from BaseCaching
     -implements the get and put()
 """
+BaseCaching = __import__("base_caching").BaseCaching
 
 
 class BasicCache(BaseCaching):
     """ inherits from BaseCaching"""
-    def __init__(self):
-        self.cache_data = {}
-        super().__init__()
 
     def put(self, key, item):
         """Adds items to the dctionary"""
-        if key is not None and item is not None:
+        if key and item:
             self.cache_data[key] = item
 
     def get(self, key):
