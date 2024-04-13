@@ -19,7 +19,7 @@ babel = Babel(app)
 @babel.localselector
 def get_locale():
     """Doc doc"""
-    return request.accept_languages.best_match(app.Config.["LANGUAGES"])
+    return request.accept_languages.best_match(app.Config["LANGUAGES"])
 
 
 @app.route('/')
