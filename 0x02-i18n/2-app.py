@@ -9,7 +9,7 @@ babel = Babel(app)
 
 @babel.localselector
 def get_locale():
-    user = getattr(setup, 'user')
+    user = getattr(setup, 'user', None)
     if user is not None:
         return user.locale
     return request.accept_languages(['en', 'fr'])
