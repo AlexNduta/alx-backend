@@ -12,3 +12,11 @@ babel = Babel(app)
 def get_locale():
     """Doc doc"""
     return request.accept_languages.best_match(app.setup.["LANGUAGES"])
+
+@app.route('/')
+def hello():
+    """func doc hunc doc"""
+    return render_template("2-index.html")
+
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port="5000")
