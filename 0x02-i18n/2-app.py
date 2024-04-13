@@ -3,15 +3,19 @@
 from flask import Flask, render_template, request
 from flask_babel import Babel
 
-setup = __import__('1-app').Config
+class Config(object):
+    LANGUAGES = ["en", "fr"]
+    BABEL_DEFAULT_LOCALE = "en"
+    BABEL_DEFAULT_TIMEZONE = "UTC"
+
 app = Flask(__name__)
-app.config.from_object(setup)
+app.config.from_object(Config)
 babel = Babel(app)
 
 @babel.localselector
 def get_locale():
     """Doc doc"""
-    return request.accept_languages.best_match(app.setup.["LANGUAGES"])
+    return request.accept_languages.best_match(app.Config.["LANGUAGES"])
 
 @app.route('/')
 def hello():
