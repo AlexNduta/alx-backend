@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+""" Doc doc """
 import typing
 from flask import Flask, render_template
 
