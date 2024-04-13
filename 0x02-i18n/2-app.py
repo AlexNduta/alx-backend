@@ -10,8 +10,5 @@ babel = Babel(app)
 
 @babel.localselector
 def get_locale():
-    user = getattr(setup, 'user', None)
-    if user is not None:
-        return user.locale
-    supported_languages = ['en', 'fr']
-    return request.accept_languages.best_match(supported_languages)
+    """Doc doc"""
+    return request.accept_languages.best_match(app.setup.["LANGUAGES"])
