@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """ module level doc"""
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_babel import Babel
+
 setup = __import__('1-app').Config
 app = Flask(__name__)
 app.config.from_object(setup)
@@ -12,4 +13,5 @@ def get_locale():
     user = getattr(setup, 'user', None)
     if user is not None:
         return user.locale
-    return request.accept_languages(['en', 'fr'])
+    supported_languages = ['en', 'fr']
+    return request.accept_languages.best_match(supported_languages)
