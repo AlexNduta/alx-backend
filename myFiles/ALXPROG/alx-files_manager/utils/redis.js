@@ -1,66 +1,54 @@
-const redis = require('redis');
+import redis from 'redis';
 
-class RedisClient{
-/* handles interactions with redis server
- */
-    constructor(){
-        // create the redis client
-        try{
+class RedisClient {
+  constructor() {
+    this.client = redis.createClient();
+    this.client.on('error', (error) => {
+      console.error(error);
+    });
+  }
 
-            this.client= redis.createClient();
-        } catch (err){
-            console.error('Error creating Redis client:', err)
+  isAlive() {
+    return this.client.connected;
+  }
+
+  async get(key) {
+    return new Promise((resolve, reject) => {
+      this.client.get(key, (error, reply) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(reply);
         }
-        // handle error if any
-        this.client.on('error', (err)=> console.error('Redis client Error:', err));
-    }
+      });
+    });
+  }
 
-    isAlive(){
-        /* check if the connection is succesful
-         */
-        return this.client.connected;
-    }
-
-    async get(key){
-        /*
-         *Arg: key: this is the key to the value stored
-         */
-        try{
-            return await this.client.get(key);
-        } catch (err){
-            console.error('Redis Get error:', err);
-            return null || 'NOT FOUND';
+  async set(key, value, duration) {
+    return new Promise((resolve, reject) => {
+      this.client.setex(key, duration, value, (error, reply) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(reply);
         }
-    }
+      });
+    });
+  }
 
-    async set(key, value, duration){
-        /*
-         *used to set a string and its value
-         *arg: key=> key to retrive the value
-         * arg: value: this is the actual content
-         * duration=> This is an integer to represent the period(sec) to store the value
-         */
-        try{
-            await this.client.set(key, value, 'EX', duration);
-        } catch(err){
-            console.error('Redis Set error:', err)
-
+  async del(key) {
+    // eslint-disable-next-line no-unused-vars
+    return new Promise((resolve, _reject) => {
+      this.client.del(key, (error) => {
+        if (error) {
+          resolve(false);
+        } else {
+          resolve(true);
         }
-    }
-
-    async del (key){
-        /*used to delete an item using the provided key
-         * arg: key=> this is the key used to retrieve an item from the db
-         */
-        try{
-            await this.client.del(key);
-        } catch(err){
-            console.error('Redis delete error:', err);
-        }
-
-    }
-
+      });
+    });
+  }
 }
 
 const redisClient = new RedisClient();
-module.exports = redisClient;
+export default redisClient;
